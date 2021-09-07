@@ -1,0 +1,32 @@
+<div class="container m-3 well hooverwell thumbnail">
+  <div [routerLink]="['/events', event.id]" class="row">
+    <div class="card col-md-5 p-1">
+      <!-- ? if value can be null -->
+      <h2 class="card-header">{{ event?.name | uppercase }}</h2>
+      <div class="card-body">
+        <div>Date: {{ event?.date | date:'shortDate'}}</div>
+        <div [ngSwitch]="event?.time"
+          [ngClass]="{
+            green: event?.time === '8:00 am',
+            bold: event.time === '8:00 am'
+          }"
+        >
+          Time: {{ event?.time }}
+          <span *ngSwitchCase="'8:00 am'">Early</span>
+          <span *ngSwitchCase="'10:00 am'">Late</span>
+          <span *ngSwitchDefault>Normal</span>
+
+        </div>
+        <div [ngClass]="getStartTimeClass()">Price: {{ event?.price | currency:'USD'}}</div>
+      </div>
+      <div [hidden]="!event?.location">
+        <span>Location: {{ event?.location?.address }}</span>
+        <span>{{ event?.location?.city }}, {{ event?.location?.country }}</span>
+      </div>
+      <div *ngIf="event?.onlineUrl">online URL: {{ event?.onlineUrl }}</div>
+      <button class="btn btn-primary mt-5" (click)="handleClickMe()">
+        Click
+      </button>
+    </div>
+  </div>
+</div>
